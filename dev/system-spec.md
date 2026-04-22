@@ -19,8 +19,9 @@ Design a centralized payment orchestration layer that abstracts external payment
   - Provide audit logs for all payment operations
 
 #### Non-Goals
-  - Acting as a financial institution or holding funds
-  - Building fraud detection systems
+  - Move money between bank accounts directly
+  - Act as a payment gateway (Stripe/Adyen handle that)
+  - Handle fraud detection (could be external or future module)
   - Managing chargebacks/disputes (future scope)
   - Real-time settlement guarantees (depends on provider)
 
@@ -71,7 +72,7 @@ Application (needing payment service) -> Payment Service -> External Providers(l
 The payment service system also listens for updates coming back from those providers
 
 ### Components
-  - API Gateway
+  - API Gateway 
   - Payment Service (core orchestration)
   - Provider Adapter Layer (StripeAdapter, etc)
   - Webhook Handler Service
