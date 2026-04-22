@@ -62,3 +62,19 @@ Design a centralized payment orchestration layer that abstracts external payment
   - Multiple providers may be added in future
   - Webhooks are the source of truth for final payment status
 
+### 7. High-Level Architecture
+
+### Big Picture 
+The payment service system sits in the middle:
+Application (needing payment service) -> Payment Service -> External Providers(like Stripe)
+
+The payment service system also listens for updates coming back from those providers
+
+### Components
+  - API Gateway
+  - Payment Service (core orchestration)
+  - Provider Adapter Layer (StripeAdapter, etc)
+  - Webhook Handler Service
+  - Database (payment state store)
+  - Message Queue (optional but recommended)
+  - Provider APIs (Stripe, etc.)
