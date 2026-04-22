@@ -23,3 +23,17 @@ Design a centralized payment orchestration layer that abstracts external payment
   - Building fraud detection systems
   - Managing chargebacks/disputes (future scope)
   - Real-time settlement guarantees (depends on provider)
+
+### 3. Users & Use Cases
+
+#### User Types
+  - Client Applications: SaaS apps initiating payments
+  - End Users: Paying customers
+  - Admin/System Operators: Monitoring and reconciliation
+
+#### Core Use Cases
+  - Create a payment intent
+  - Process payment via provider (e.g. Stipe)
+  - Retrieve payment status
+  - Retry failed payments (where safe)
+  - Reconcile internal state with provider state
