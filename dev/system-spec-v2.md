@@ -53,3 +53,25 @@ That means:
     - A consistent payment lifecycle model
     - Abstraction over providers
     - Reliability layer on top of unreliable external systems
+
+### 3. What does success look like?
+#### Functional Success
+    - Payments are created and completed correctly
+    - Payment status is always accurate
+
+#### System-Level Success
+    - No duplicate charges (Idempotency works)
+    - No "lost" payments (every request is tracked)
+    - Webhooks are processed reliably
+
+#### Business-Level Success
+    - Teams can integrate payments quickly
+    - Switching from Stripe to another provider is low effort
+    - Minimal operational incidents
+
+#### Failure Definition
+    - Payment marked "success" internally but failed externally
+    - Duplicate charge due to retry
+    - Webhook missed -> incorrect state
+
+### 4. What is explicitly out of scope?
