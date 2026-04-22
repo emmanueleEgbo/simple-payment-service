@@ -103,3 +103,6 @@ You are building:
         - Arrive out of order
 
 #### Security Constraints
+    - Must avoid handling sensitive card details directly
+    - Must verify webhook signatures
+
