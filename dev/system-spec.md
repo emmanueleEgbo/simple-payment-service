@@ -37,3 +37,12 @@ Design a centralized payment orchestration layer that abstracts external payment
   - Retrieve payment status
   - Retry failed payments (where safe)
   - Reconcile internal state with provider state
+
+### 4. Functional Requirements
+  - Create payment intents
+  - Route payments to selected provider (Stripe, etc.)
+  - Store payment state internally
+  - Handle asynchronous payment confirmation (webhooks)
+  - Support idempotent requests
+  - Provide payment status query API
+  - Log all provider interactions
