@@ -75,3 +75,13 @@ That means:
     - Webhook missed -> incorrect state
 
 ### 4. What is explicitly out of scope?
+Storing or processing raw card data (PCI scope)
+Building a UI/dashboard
+Fraud detection systems
+Dispute/chargeback handling
+Multi-provider smart routing (can come later)
+Subscription billing logic
+
+#### Why this is important:
+You are building:
+    - A payment orchestration layer, not a full payment platform
