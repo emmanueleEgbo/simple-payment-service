@@ -54,3 +54,11 @@ Design a centralized payment orchestration layer that abstracts external payment
   - Latency: <500ms for payment initiation  (excluding provider delay)
   - Scalability: Horizontal scaling for API and webhooks processing (should be able to handle growing traffic by: 1. adding more API servers when more payment requests come in and, 2. adding more workers to process incoming webhook events)
   - Security: PCI-aware design (no raw card storage)
+
+### 6. Assumptions & Constraints
+  - External payment providers handle actual fund movement
+  - System stores only metadata + transaction state
+  - Card data never touches system (tokenized via provider)
+  - Multiple providers may be added in future
+  - Webhooks are the source of truth for final payment status
+
