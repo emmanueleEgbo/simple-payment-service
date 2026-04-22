@@ -109,3 +109,8 @@ You are building:
 #### Operational Constraints
     - System must be debuggable:
         - "What happened to this payment?" must always be answerable
+
+### So, what are we building?
+    - We are building a backend payment service that abstracts providers like Stripe and provides a consistent API for creating and tracking payments.
+    It ensures reliability through idempotency, webhook handling, and internal state management.
+    The goal is to decouple application teams from payment provider complexity while maintaining accurate and auditable payment flows.
