@@ -106,3 +106,6 @@ You are building:
     - Must avoid handling sensitive card details directly
     - Must verify webhook signatures
 
+#### Operational Constraints
+    - System must be debuggable:
+        - "What happened to this payment?" must always be answerable
