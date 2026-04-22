@@ -52,5 +52,5 @@ Design a centralized payment orchestration layer that abstracts external payment
   - Reliability: No lost payment intents, No duplicated payment intents
   - Availability: 99.9%
   - Latency: <500ms for payment initiation  (excluding provider delay)
-  - Scalability: Horizontal scaling for API and webhooks processing
+  - Scalability: Horizontal scaling for API and webhooks processing (should be able to handle growing traffic by: 1. adding more API servers when more payment requests come in and, 2. adding more workers to process incoming webhook events)
   - Security: PCI-aware design (no raw card storage)
