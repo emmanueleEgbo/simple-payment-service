@@ -46,3 +46,11 @@ Design a centralized payment orchestration layer that abstracts external payment
   - Support idempotent requests
   - Provide payment status query API
   - Log all provider interactions
+
+### 5. Non-Functional Requirements
+  - Consistency: Strong consistency for internal payment state
+  - Reliability: No lost payment intents, No duplicated payment intents
+  - Availability: 99.9%
+  - Latency: <500ms for payment initiation  (excluding provider delay)
+  - Scalability: Horizontal scaling for API and webhooks processing
+  - Security: PCI-aware design (no raw card storage)
