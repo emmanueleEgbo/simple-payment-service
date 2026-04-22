@@ -1,4 +1,4 @@
-### System Specification - A Simple Payment Service (3rd-Party Gateway Integration)
+# System Specification - A Simple Payment Service (3rd-Party Gateway Integration)
 
 ## 1. Overview
 
