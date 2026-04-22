@@ -8,7 +8,7 @@ Design a centralized payment orchestration layer that abstracts external payment
     - high reliability despite external failures
     - a single, consistent source of truth for payment state
 
-### Goals & Non-Goals
+### 2. Goals & Non-Goals
 
 #### Goals
   - Abstract multiple payment providers behind a unified API
