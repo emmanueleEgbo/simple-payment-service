@@ -32,3 +32,24 @@ That means:
     - API design matters more than UI
     - Reliability matters more than features
     - Observability is critical
+
+
+### 2. What problem does it actually solve?
+#### Surface Problem
+    - "Process payments using Stripe (or similar providers)"
+
+#### Real Problem (deeper)
+    - "Provide a reliable, consistent, and provider-agnostic way for systems to handle payments without tightly coupling to external payment APIs."
+
+#### Pain Points You Are Solving
+    - Every team integrating directly with Stripe duplicates logic
+    - Handling webhooks, retries, failures is complex
+    - Provider APIs can change or behave inconsistently
+    - Hard to switch providers later (vendor lock-in)
+    - No unified tracking of payment state across systems
+
+#### Your System Provides
+    - A single internal API
+    - A consistent payment lifecycle model
+    - Abstraction over providers
+    - Reliability layer on top of unreliable external systems
