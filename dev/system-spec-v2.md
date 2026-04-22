@@ -85,3 +85,21 @@ Subscription billing logic
 #### Why this is important:
 You are building:
     - A payment orchestration layer, not a full payment platform
+
+### 5. Constraints
+#### Technical Constraints
+    - Must rely on external providers like Stripe
+    - Must handle asynchronous workflows (webhooks)
+    - Must support idempotent operations
+
+#### System Constraints
+    - External APIs can:
+        - Fail
+        - Timeout
+        - Return inconsistent states
+    - Webhooks can:
+        - Arrive late
+        - Arrive multiple times
+        - Arrive out of order
+
+#### Security Constraints
