@@ -361,3 +361,13 @@ Represents a single attempt to execute a payment with a provider.
         - Handles retries without corrupting the main Payment
         - Clean separation between business payment and provider interaction
 
+PaymentEvent
+Immutable log of everything that happens.
+    - id
+    - payment_id
+    - payment_attempt_id (nullable but useful)
+    - event_type (CREATED, ATTEMPTED, SUCCESS, FAILED, WEBHOOK_RECEIVED)
+    - provider_event_id (for deduplication)
+    - payload (raw or sanitized provider data)
+    - created_at
+This is your audit trail + debugging tool
