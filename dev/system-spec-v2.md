@@ -142,3 +142,7 @@ You are building:
 #### Observability & Debugging
 A client (or internal user) can trace the lifecycle of a payment
 The system records provider responses for debugging and reconciliation
+
+#### Optional / Nice-to-Have
+    - The system can retry failed provider requests (where safe)
+    - The system can support multiple payment providers (extensible design)
