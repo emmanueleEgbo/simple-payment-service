@@ -149,7 +149,8 @@ The system records provider responses for debugging and reconciliation
 
 
 ### 2. Non-Functional Requirements — How the system does what it does
-#### Availability: How often can the system be down?
+#### Availability: 
+Question: How often can the system be down?
 Decision:
     - Target:- 99.9%+ uptime
     - Payment creation should always be available
@@ -157,3 +158,12 @@ Decision:
 
 Why it matters:
     - If payment fail during checkout -> direct revenue loss
+
+#### Latency
+Question: How fast must responses be?
+Decision:
+    - Payment initiation: < 500ms (excluding provider delays)
+    - Webhook processing: near real-time but not user-facing
+
+Important nuance:
+    - Final payment confirmation is asynchronous, so latency is less critical there
