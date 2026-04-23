@@ -416,3 +416,35 @@ Index: provider_event_id (unique)
     - SELECT * FROM payment_events 
     WHERE payment_id = ? 
     ORDER BY created_at;
+
+Index: (payment_id, created_at)
+
+#### 5. Index Strategy
+    - payments.id → primary key
+    - payments.idempotency_key → unique index
+    - payment_attempts.provider_payment_id → unique index
+    - payment_attempts.payment_id, created_at → composite index
+    - payment_events.provider_event_id → unique index
+    - payment_events.payment_id, created_at → composite index
+
+#### Principle:
+##### Index based on access patterns, not assumptions
+
+#### 6. Data That Changes vs Doesn’t
+Stable (write once)
+    - amount
+    - currency
+    - provider
+
+Mutable (state machine)
+    - payment.status
+    - payment_attempt.status
+    - updated_at
+
+Append-only (never update)
+    - payment_events
+
+#### 7. Key Design Insight
+    - Treat Payment as a derived snapshot
+    - Treat PaymentEvent as the source of truth
+    - Treat PaymentAttempt as the execution boundary
