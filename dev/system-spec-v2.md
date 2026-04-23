@@ -128,3 +128,6 @@ You are building:
     - The payment service system then stores and tracks the payment status internally
 
 #### Payment Lifecycle
+    - The system receives asynchronous updates from the provider (webhooks)
+    - The system updates the payment status based on provider events
+    - A client can query the current status of a payment
