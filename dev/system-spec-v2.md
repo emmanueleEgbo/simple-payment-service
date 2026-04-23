@@ -1,9 +1,9 @@
 # System Specification - A Simple Payment Service (3rd-Party Gateway Integration)
 
 ## Stage 1 - Understand the problem
-## Overview
-### Problem Statement
-Design a centralized payment orchestration layer that abstracts external payment gateways. It standardizes how payments are created, monitored, and reconciled, while guaranteeing:
+
+### Problem Statement 
+The payment service system sits between Client Apps and 3rd-party payment providers like Stripe and it standardizes how payments are created, monitored, and reconciled, while guaranteeing:
     - no duplicate operations (idempotency)
     - high reliability despite external failures
     - a single, consistent source of truth for payment state
@@ -41,7 +41,7 @@ That means:
 #### Real Problem (deeper)
     - "Provide a reliable, consistent, and provider-agnostic way for systems to handle payments without tightly coupling to external payment APIs."
 
-#### Pain Points You Are Solving
+#### Pain Points being Solved
     - Every team integrating directly with Stripe duplicates logic
     - Handling webhooks, retries, failures is complex
     - Provider APIs can change or behave inconsistently
@@ -111,6 +111,6 @@ You are building:
         - "What happened to this payment?" must always be answerable
 
 ### So, what are we building?
-    - We are building a backend payment service that abstracts providers like Stripe and provides a consistent API for creating and tracking payments.
+    - We are building a backend payment service that sits between client apps and payment providers like Stripe and provides a consistent API for creating and tracking payments.
     It ensures reliability through idempotency, webhook handling, and internal state management.
     The goal is to decouple application teams from payment provider complexity while maintaining accurate and auditable payment flows.
