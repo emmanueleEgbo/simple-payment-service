@@ -242,20 +242,82 @@ Decision:
 ## Stage 3 - Estimate the Scale
 
 #### Assumptions
-    - Payments created per day: 10,000
-    - Read/write ratio: ~3:1
-    - Webhooks per payment: ~2–3 events
+Business Context
+Mid-size SaaS / marketplace
 
 #### Traffic Estimates
-
-Writes (payment creation):
-    - ~10,000/day → ~0.1 req/sec average
-    - Peak: ~1 req/sec
-
-Reads (status checks):
-    - ~30,000/day → ~0.3 req/sec average
-    - Peak: ~3–5 req/sec
+    - Payments/day: 10,000 (moderate product usage baseline)
+    - Peak multiplier: ~5× (accounts for bursts like sales/events likr black fridays)
+    - Read/write ratio: ~3:1 (users check status, dashboards, retries)
 
 Webhooks (provider → system):
-    - ~25,000/day → ~0.3 req/sec average
+    - ~2–3 events per payment (typical provider lifecycle: created → processing → final state)
+    - ⇒ ~25,000 events/day
+
+#### Requests per Second
+Writes (payment creation)
+    - 10,000 / 86,400 ≈ ~0.1 req/sec avg (spread over a day)
+    - Peak: ~1 req/sec
+
+Reads (status checks)
+    - ~30,000/day → ~0.3 req/sec avg (3× writes)
+    - Peak: ~3–5 req/sec
+
+Webhooks (provider → system)
+    - 25,000 / 86,400 ≈ ~0.3 req/sec avg (event-driven, not user-driven)
     - Peak: ~3 req/sec
+
+#### Total Peak Load
+    - Writes: ~1 req/sec
+    - Reads: ~5 req/sec
+    - Webhooks: ~3 req/sec
+
+👉 ~10 req/sec total
+
+#### Storage Estimates
+Payment records:
+    - ~1 KB per record (IDs, status, metadata, timestamps)
+    - ~11M over 3 years → ~11 GB (10,000/day * 365 * 3 years aprox equals 11M records)
+    - => ~11 GB
+
+Event logs (webhooks):
+    - ~1 KB per event(store provider payload + status changes)
+    - 25,000/day × 365 × 3 years ≈ ~27M events
+    - ~27M events → ~27 GB
+
+Total storage (3 years):
+    - ~40 GB over 3 years (fits comfortably in a single DB instance)
+
+#### Bandwidth Estimation
+API traffic
+    - ~10 req/sec × ~2 KB ≈ ~20 KB/sec (small JSON payloads)
+
+Webhooks
+    - ~3 req/sec × ~2 KB ≈ ~6 KB/sec
+
+<50 KB/sec total (negligible)
+
+#### Key Observations
+    - System operates at low–moderate scale (~10 req/sec peak)
+    - Storage is manageable on a single relational database
+    - Webhooks are a core workload (async, duplicate-prone, not just API traffic)
+    - System is correctness-heavy, not scale-heavy
+
+Architectural Implication
+Question: Given this scale, what is the simplest architecture that handles this load with room to grow?:
+Answer:
+    - The simplest system that works:
+        - Modular monolith backend (one backend service)
+        - Single relational database (e.g. PostgreSQL)
+        - Optional async processing for webhooks (can evolve later)
+
+Final Check
+No need yet for:
+    - Microservices
+    - Distributed queues
+    - Sharding or complex scaling strategies
+These are anti-patterns to avoid. No need for over-engineering from get go when our numbers says different.
+
+### The Most Important Insight from Stage 3
+Our system is:
+    - A low-scale, high-correctness system with external dependencies
