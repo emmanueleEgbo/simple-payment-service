@@ -196,3 +196,14 @@ Decision:
 Relaxation:
     - Debug logs can be lossy
     - Metrics can be sampled
+
+#### Reliability (Critical for payments)
+Question: What happens when things go wrong?
+Decision:
+
+    - All operations must be idempotent
+    - System must tolerate:
+        - duplicate requests
+        - duplicate webhooks
+        - partial failures
+    - Retry only safe operations
