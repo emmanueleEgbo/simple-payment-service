@@ -456,3 +456,15 @@ Append-only (never update)
     - Full audit trail
     - Clear debugging (“what happened and when?”)
     - Clean separation of concerns
+
+#### Why this is the simplest complete design
+This avoids:
+
+    - Overloading Payment with provider logic
+    - Losing retry information
+    - Mixing state and history
+
+While still supporting:
+    - Real-world async flows
+    - Multiple attempts
+    - Provider integration
