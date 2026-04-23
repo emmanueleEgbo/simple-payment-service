@@ -128,6 +128,17 @@ You are building:
     - The payment service system then stores and tracks the payment status internally
 
 #### Payment Lifecycle
-    - The system receives asynchronous updates from the provider (webhooks)
-    - The system updates the payment status based on provider events
-    - A client can query the current status of a payment
+    - The system receives asynchronous updates from the provider via webhooks
+    - The system validates, deduplicates, and processes incoming events
+    - The system updates the persisted payment status based on provider events
+    - The system maintain the latest payment status as the source of truth
+    - Client apps can query the current status of a payment at anytime
+
+#### Reliability & Safety
+    - The system ensures idempotency for payment creation (no duplicate charges)
+    - The system logs all payment-related events for audit purposes
+    - The system handles duplicate or repeated webhook events safely
+
+#### Observability & Debugging
+A client (or internal user) can trace the lifecycle of a payment
+The system records provider responses for debugging and reconciliation
