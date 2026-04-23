@@ -237,3 +237,11 @@ Decision:
 
 ### In summary, so far, we’ve implicitly defined this system as:
 ##### A state machine managing payments under uncertainty
+
+
+## Stage 3 - Estimate the Scale
+
+#### Assumptions
+    - Payments created per day: 10,000
+    - Read/write ratio: ~3:1
+    - Webhooks per payment: ~2–3 events
