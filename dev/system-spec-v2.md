@@ -215,3 +215,16 @@ Decision:
     - Webhooks must be verified (signature validation)
     - API must enforce authentication + authorization
     - Sensitive data encrypted in transit (TLS)
+
+#### Observability
+Question: Can we debug issues in production?
+Decision:
+    - Every payment must be traceable end-to-end
+    - Logs must include:
+        - request
+        - provider interaction
+        - webhook events
+    - Metrics:
+        - success rate
+        - failure rate
+        - latency
