@@ -333,7 +333,7 @@ Core Entities
     - PaymentEvent — immutable history of all changes
     - PaymentAttempt — each attempt to process a payment (handles retries cleanly)
 
-### 2. Define Attributes
+### 2. Define the Attributes of each entity
 
 Payment:- Represents the overall payment (business-level object).
     - id (UUID)
@@ -373,12 +373,31 @@ Immutable log of everything that happens.
     - created_at
 This is your audit trail + debugging tool
 
-### 3. Relationships
-    - One Payment → many PaymentAttempts
-    - One Payment → many PaymentEvents
-    - One PaymentAttempt → many PaymentEvents
+### 3. Define the Relationships between entities
+    - One Payment → has many PaymentAttempts
+    - One Payment → has many PaymentEvents
+    - One PaymentAttempt → has many PaymentEvents
 
 #### Core Mental Model
     - Payment = current snapshot (what clients read)
     - PaymentAttempt = execution layer (interaction with provider)
     - PaymentEvent = source of truth (what actually happened)
+
+### Think about access patterns
+Design the schema around how it's used:
+
+#### Query 1 — Idempotent create / retry
+    - SELECT * FROM payments WHERE idempotency_key = ?;
+Index: idempotency_key (unique)
+
+#### Query 2 — Get payment by ID
+    - SELECT * FROM payments WHERE id = ?;
+Primary key
+
+#### 3. Query 3 — Get latest attempt for a payment
+    - SELECT * FROM payment_attempts 
+    WHERE payment_id = ? 
+    ORDER BY created_at DESC 
+    LIMIT 1;
+    
+Index: (payment_id, created_at)
