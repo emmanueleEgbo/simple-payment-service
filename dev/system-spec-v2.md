@@ -377,3 +377,8 @@ This is your audit trail + debugging tool
     - One Payment → many PaymentAttempts
     - One Payment → many PaymentEvents
     - One PaymentAttempt → many PaymentEvents
+
+#### Core Mental Model
+    - Payment = current snapshot (what clients read)
+    - PaymentAttempt = execution layer (interaction with provider)
+    - PaymentEvent = source of truth (what actually happened)
