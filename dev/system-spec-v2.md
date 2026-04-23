@@ -146,3 +146,14 @@ The system records provider responses for debugging and reconciliation
 #### Optional / Nice-to-Have
     - The system can retry failed provider requests (where safe)
     - The system can support multiple payment providers (extensible design)
+
+
+### 2. Non-Functional Requirements — How the system does what it does
+#### Availability: How often can the system be down?
+Decision:
+    - Target:- 99.9%+ uptime
+    - Payment creation should always be available
+    - Temporary degradation acceptable for non-critical operations (e.g. logs)
+
+Why it matters:
+    - If payment fail during checkout -> direct revenue loss
