@@ -207,3 +207,11 @@ Decision:
         - duplicate webhooks
         - partial failures
     - Retry only safe operations
+
+#### Security
+Question: What must be protected?
+Decision:
+    - No storage of raw card data (handled by Stripe)
+    - Webhooks must be verified (signature validation)
+    - API must enforce authentication + authorization
+    - Sensitive data encrypted in transit (TLS)
