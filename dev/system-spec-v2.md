@@ -331,3 +331,33 @@ Core Entities
     - Payment — current state of a payment
     - PaymentEvent — immutable history of all changes
     - PaymentAttempt — each attempt to process a payment (handles retries cleanly)
+
+### 2. Define Attributes
+
+Payment:- Represents the overall payment (business-level object).
+    - id (UUID)
+    - user_id (from client system)
+    - amount
+    - currency
+    - status (PENDING, PROCESSING, SUCCESS, FAILED)
+    - provider (e.g. stripe)
+    - idempotency_key (prevents duplicate payment creation)
+    - created_at
+    - updated_at
+
+#### Note: Do not store provider IDs here - keep Payment provider-agnostic
+
+PaymentAttempt
+Represents a single attempt to execute a payment with a provider.
+    - id
+    - payment_id
+    - provider
+    - provider_payment_id (e.g. Stripe payment_intent_id)
+    - status (INITIATED, REQUIRES_ACTION, SUCCESS, FAILED)
+    - created_at
+    - updated_at
+
+    Why this exists:
+        - Handles retries without corrupting the main Payment
+        - Clean separation between business payment and provider interaction
+
