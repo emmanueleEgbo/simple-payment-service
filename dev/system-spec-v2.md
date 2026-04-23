@@ -167,3 +167,12 @@ Decision:
 
 Important nuance:
     - Final payment confirmation is asynchronous, so latency is less critical there
+
+#### Consistency
+Question: Must all systems see the same data immediately?
+Decision:
+    - Strong consistency for internal payment state
+    - Accept eventual consistency with provider state
+
+Why:
+    - You depend on Stripe → you don’t control final state timing
