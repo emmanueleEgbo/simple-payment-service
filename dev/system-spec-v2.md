@@ -245,3 +245,17 @@ Decision:
     - Payments created per day: 10,000
     - Read/write ratio: ~3:1
     - Webhooks per payment: ~2–3 events
+
+#### Traffic Estimates
+
+Writes (payment creation):
+    - ~10,000/day → ~0.1 req/sec average
+    - Peak: ~1 req/sec
+
+Reads (status checks):
+    - ~30,000/day → ~0.3 req/sec average
+    - Peak: ~3–5 req/sec
+
+Webhooks (provider → system):
+    - ~25,000/day → ~0.3 req/sec average
+    - Peak: ~3 req/sec
