@@ -321,3 +321,13 @@ These are anti-patterns to avoid. No need for over-engineering from get go when 
 ### The Most Important Insight from Stage 3
 Our system is:
     - A low-scale, high-correctness system with external dependencies
+
+
+## Stage 4 — Design the Data
+### 1. Identify Core Entities
+For a complete but simplest viable system, we'd need:
+
+Core Entities
+    - Payment — current state of a payment
+    - PaymentEvent — immutable history of all changes
+    - PaymentAttempt — each attempt to process a payment (handles retries cleanly)
