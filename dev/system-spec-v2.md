@@ -114,3 +114,17 @@ You are building:
     - We are building a backend payment service that sits between client apps and payment providers like Stripe and provides a consistent API for creating and tracking payments.
     It ensures reliability through idempotency, webhook handling, and internal state management.
     The goal is to decouple application teams from payment provider complexity while maintaining accurate and auditable payment flows.
+
+
+## Stage 2 - Define Requirements
+
+### 1. Functional Requirements - What the system does
+#### Core Payment Flow
+
+#### Client System -> Payment Service System -> Payment Provider (e.g. Stripe)
+
+    - A Client System (external app e.g. checkout service) can create a payment request (ask out payment service to initiate a payment) 
+    - Our payment service system then sends the payment request to a third-party provider (e.g. Stripe)
+    - The payment service system then stores and tracks the payment status internally
+
+#### Payment Lifecycle
