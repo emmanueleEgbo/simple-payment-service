@@ -394,10 +394,25 @@ Index: idempotency_key (unique)
     - SELECT * FROM payments WHERE id = ?;
 Primary key
 
-#### 3. Query 3 — Get latest attempt for a payment
+#### Query 3 — Get latest attempt for a payment
     - SELECT * FROM payment_attempts 
     WHERE payment_id = ? 
     ORDER BY created_at DESC 
     LIMIT 1;
-    
+
 Index: (payment_id, created_at)
+
+#### Query 4 — Update status from webhook
+    - UPDATE payment_attempts SET status = ? WHERE provider_payment_id = ?;
+
+Index: provider_payment_id
+
+#### Query 5 — Deduplicate webhook events
+    - SELECT * FROM payment_events WHERE provider_event_id = ?;
+
+Index: provider_event_id (unique)
+
+#### Query 6 — Payment history (debugging)
+    - SELECT * FROM payment_events 
+    WHERE payment_id = ? 
+    ORDER BY created_at;
