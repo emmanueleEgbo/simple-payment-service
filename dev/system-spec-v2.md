@@ -228,3 +228,12 @@ Decision:
         - success rate
         - failure rate
         - latency
+
+#### Idempotency (Call this out explicitly — senior signal)
+Question: What happens if the same request is sent twice (race condition)? 
+Decision:
+    - All payment creation requests must support idempotency keys
+    - System must return the same result for duplicate requests
+
+### In summary, so far, we’ve implicitly defined this system as:
+##### A state machine managing payments under uncertainty
