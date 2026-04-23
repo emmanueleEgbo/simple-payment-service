@@ -183,6 +183,16 @@ Decision:
     - System should scale horizontally:
         - API layer
         - webhook processing
-        
+
 Key insight:
 Webhooks can spike independently of API traffic
+
+#### Durability
+Question: Can we lose data?
+Decision:
+    - Never lose payment records
+    - Never lose payment state transitions
+
+Relaxation:
+    - Debug logs can be lossy
+    - Metrics can be sampled
