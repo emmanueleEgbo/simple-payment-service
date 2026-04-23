@@ -324,6 +324,7 @@ Our system is:
 
 
 ## Stage 4 — Design the Data
+
 ### 1. Identify Core Entities
 For a complete but simplest viable system, we'd need:
 
@@ -371,3 +372,8 @@ Immutable log of everything that happens.
     - payload (raw or sanitized provider data)
     - created_at
 This is your audit trail + debugging tool
+
+### 3. Relationships
+    - One Payment → many PaymentAttempts
+    - One Payment → many PaymentEvents
+    - One PaymentAttempt → many PaymentEvents
