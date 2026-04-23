@@ -173,6 +173,16 @@ Question: Must all systems see the same data immediately?
 Decision:
     - Strong consistency for internal payment state
     - Accept eventual consistency with provider state
-
 Why:
     - You depend on Stripe → you don’t control final state timing
+
+#### Scalability
+Question: How much can load grow?
+Decision:
+    - Must handle spikes in payment requests (e.g. flash sales)
+    - System should scale horizontally:
+        - API layer
+        - webhook processing
+        
+Key insight:
+Webhooks can spike independently of API traffic
