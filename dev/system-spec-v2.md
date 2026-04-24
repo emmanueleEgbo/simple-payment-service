@@ -475,3 +475,23 @@ While still supporting:
 ### Level 1 - Simplest Possible System
 
 Start with the minimal architecture:
+[Client] -> [Backend API] -> [Database]
+                  ↓
+                [Payment Provider]
+
+### Level 2: Add the components you know you need
+Now name the technologies based on your requirements from Stage 2 and Stage 3:
+
+[Client Application]
+        │
+        ▼ HTTP
+[API Service]
+        │
+        ├──> [PostgreSQL]   (source of truth)
+        │
+        └──> [Provider Adapter] -> :contentReference[oaicite:1]{index=1} API
+
+Why this works
+    - PostgreSQL → ACID guarantees for payment correctness
+    - Adapter layer → decouples from provider (extensibility)
+    - Single service → sufficient for current scale
