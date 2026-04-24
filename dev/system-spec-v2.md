@@ -468,3 +468,10 @@ While still supporting:
     - Real-world async flows
     - Multiple attempts
     - Provider integration
+
+
+## Stage 5 - Design the System (Top-Down)
+
+### Level 1 - Simplest Possible System
+
+Start with the minimal architecture:
