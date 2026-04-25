@@ -536,3 +536,57 @@ External dependency = unreliable by default
 
     - → Always treat webhook as source of truth
     - → Update state based on latest valid transition
+
+4. API server crashes mid-request
+    - Payment created but response not returned
+
+→ Idempotency key ensures safe retry
+
+5. Database goes down
+    - Cannot read/write payments
+→ Hence System unavailable
+
+    - For v1: acceptable
+    - For v2: add replica / failover
+
+6. Background worker fails (if used)
+    - Webhooks not processed immediately
+→ Use retry mechanism / queue
+
+#### Important: events must not be lost
+
+### Key Trade-Offs
+Sync vs Async
+    - Payment creation → sync
+    - Final state → async (webhooks)
+
+### Simplicity vs Reliability
+    - Keep system simple (monolith)
+    - Add reliability where needed:
+        - idempotency
+        - event logging
+        - webhook handling
+
+### Final Architecture (v1):-
+
+[Client]
+   │
+   ▼
+[API Service]
+   │
+   ├──> [PostgreSQL]
+   │
+   ├──> [Provider Adapter] → :contentReference[oaicite:5]{index=5}
+   │
+   └──> [Webhook Handler]
+              │
+              └──→ [PostgreSQL]
+
+Final Check
+
+Does this handle our requirements and scale?
+Yes:
+    - Handles ~10 req/sec easily
+    - Ensures correctness (ACID + idempotency)
+    - Handles async provider behavior
+    Keeps system simple
