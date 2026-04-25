@@ -530,4 +530,9 @@ External dependency = unreliable by default
 2. Webhook duplication:-
     - Same event sent multiple times
 
-→ Use provider_event_id for deduplication
+#### Note: → Use provider_event_id for deduplication
+
+3. Webhook arrives late or out of order
+
+    - → Always treat webhook as source of truth
+    - → Update state based on latest valid transition
