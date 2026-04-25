@@ -590,3 +590,31 @@ Yes:
     - Ensures correctness (ACID + idempotency)
     - Handles async provider behavior
     Keeps system simple
+
+## Stage 6 - Identify the Risks
+### 1. Technical Risks
+### Duplicate Payments (Idempotency)
+Problem:
+Retries can create multiple charges
+
+Decision:
+Mitigate with idempotency keys enforced at API + DB level
+
+### Webhook Reliability
+Problem:
+Webhooks can be duplicated, delayed, or out of order
+
+Decision:
+
+Mitigate with:
+    - event deduplication (provider_event_id)
+    - state machine for valid transitions
+
+### External Provider Failure
+Problem:
+Stripe may fail or timeout
+
+Decision:
+    Mitigate + Accept
+    - retries + timeouts
+    - cannot fully control external dependency
