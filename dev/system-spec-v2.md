@@ -517,3 +517,17 @@ Why:
     - Prevent blocking on webhook processing
     - Handle retries safely
     - Smooth out spikes
+
+##### Note:- : async work must be reliable + idempotent
+
+### Level 4 - Failure Scenarios
+1. Provider (Stripe) fails:-
+    - API call fails / times out
+        - → Mark payment as FAILED or retry safely
+
+External dependency = unreliable by default
+
+2. Webhook duplication:-
+    - Same event sent multiple times
+
+→ Use provider_event_id for deduplication
