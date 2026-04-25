@@ -691,3 +691,16 @@ Scope:
     - Return current status
 Now:
 System is observable and testable
+
+### Slice 3 — Webhook Handling (Critical Path)
+Goal:
+
+Handle async provider updates
+
+Scope:
+    - Webhook endpoint (POST /webhooks/stripe)
+    - Validate signature (basic)
+    - Store PaymentEvent
+    - Update Payment status
+Now:
+Full payment lifecycle works end-to-end
