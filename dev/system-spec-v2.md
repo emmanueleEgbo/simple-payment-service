@@ -618,3 +618,40 @@ Decision:
     Mitigate + Accept
     - retries + timeouts
     - cannot fully control external dependency
+
+### 2. Operational Risks
+### Missed Webhooks / Incorrect State
+
+Problem:
+    - System state diverges from provider
+
+Decision:
+    - Mitigate with reconciliation jobs + event logs
+
+### Traffic Spikes
+
+Problem:
+    - Sudden increase in payment volume
+
+Decision:
+    - Mitigate with horizontal scaling (API layer)
+
+#### 3. Business Risk
+### Vendor Lock-In
+
+Problem:
+    - Tight coupling to Stripe
+
+Decision:
+    - Mitigate via provider adapter layer
+
+### Core Insight
+The primary risk is incorrect payment state, not scale or latency.
+
+### Focus areas:
+
+Idempotency
+Webhook handling
+State consistency
+
+Everything else is secondary at this stage.
