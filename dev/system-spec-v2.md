@@ -704,3 +704,40 @@ Scope:
     - Update Payment status
 Now:
 Full payment lifecycle works end-to-end
+
+### Slice 4 — Idempotency
+Goal:
+
+Prevent duplicate payments
+
+Scope:
+    - Add idempotency_key
+    - Enforce uniqueness in DB
+    - Return existing payment on retry
+Now:
+Safe for real-world usage
+
+### Slice 5 — Error Handling
+Goal:
+Handle failures gracefully
+
+Scope:
+    - Provider API failures
+    - Invalid inputs
+    - Missing payments
+    - Basic retry logic (safe cases only)
+
+Now:
+System is robust, not just functional
+
+### Slice 6 — Event Logging & Debugging
+Goal:
+Make system observable
+
+Scope:
+    - Store all PaymentEvents
+    - Log provider responses
+    - Add simple tracing (request → webhook)
+
+Now:
+You can debug real issues
