@@ -655,3 +655,13 @@ Webhook handling
 State consistency
 
 Everything else is secondary at this stage.
+
+## Stage 7 - Plan the Build (Iterative)
+### Build Strategy
+
+Build end-to-end slices, not layers
+
+Goal:
+    - Working system as early as possible
+    - Validate assumptions quickly
+    - Reduce rework
