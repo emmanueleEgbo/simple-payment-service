@@ -740,4 +740,49 @@ Scope:
     - Add simple tracing (request → webhook)
 
 Now:
-You can debug real issues
+We can debug real issues
+
+### Slice 7 — (Optional) Async Processing
+Goal:
+Improve reliability under load
+
+Scope:
+    - Queue webhook processing
+    - Background worker
+    - Retry failed events
+
+Only if needed (based on scale)
+
+### Correct Build Order (Why this works)
+    1. Happy path → prove system works
+    2. Read path → visibility
+    3. Async flow (webhooks) → real-world behavior
+    4. Idempotency → correctness
+    5. Error handling → robustness
+    6. Observability → maintainability
+    7. Performance → only if needed
+
+### Key Insight
+You are building a payment lifecycle, not just endpoints
+
+Each slice adds:
+    - correctness
+    - reliability
+    - confidence
+
+### What NOT to do
+    1. Build all DB models first
+    2. Build full provider abstraction upfront
+    3. Add queues before you need them
+    4. Over-design for scale
+
+### End Result
+
+After Slice 3–4, you already have:
+    1. Payment creation
+    2. Provider interaction
+    3. Webhook handling
+    4. State updates
+    5. Idempotency
+
+That’s a real, working payment system
