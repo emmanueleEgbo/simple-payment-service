@@ -679,3 +679,15 @@ Scope:
 
 After this:
 We have a working payment flow (even if incomplete)
+
+### Slice 2 — Payment Status Retrieval
+Goal:
+
+Be able to read payment state
+
+Scope:
+    - GET /payments/{id}
+    - Fetch from DB
+    - Return current status
+Now:
+System is observable and testable
