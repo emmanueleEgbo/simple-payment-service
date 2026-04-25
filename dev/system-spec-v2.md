@@ -504,3 +504,16 @@ Why this works
         - call :contentReference[oaicite:2]{index=2}
         - store provider_payment_id
         - return response
+
+### Webhook Flow (Async, source of truth)
+:contentReference[oaicite:3]{index=3} → Webhook → [Webhook Handler]
+                               │
+                               ├──> validate signature
+                               ├──> deduplicate event
+                               └──> update Payment + insert PaymentEvent
+
+[Webhook Handler] → [Background Worker] → [PostgreSQL]
+Why:
+    - Prevent blocking on webhook processing
+    - Handle retries safely
+    - Smooth out spikes
