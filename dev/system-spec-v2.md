@@ -495,3 +495,12 @@ Why this works
     - PostgreSQL → ACID guarantees for payment correctness
     - Adapter layer → decouples from provider (extensibility)
     - Single service → sufficient for current scale
+
+### Level 3 — Handle Async Work (Critical for Payments)
+### Payment Flow (Synchronous + Async)
+    1. Client → POST /payments
+    2. API:
+        - create Payment (PENDING)
+        - call :contentReference[oaicite:2]{index=2}
+        - store provider_payment_id
+        - return response
