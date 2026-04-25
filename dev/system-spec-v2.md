@@ -665,3 +665,17 @@ Goal:
     - Working system as early as possible
     - Validate assumptions quickly
     - Reduce rework
+
+### Slice 1 - Core Happy Path 
+Goal:
+Create a payment and store it
+
+Scope:
+    - POST /payments
+    - Save Payment in DB (PENDING)
+    - Call Stripe (or mock)
+    - Store provider_payment_id
+    - Return response
+
+After this:
+We have a working payment flow (even if incomplete)
