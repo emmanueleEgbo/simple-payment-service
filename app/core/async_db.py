@@ -22,3 +22,12 @@ AsyncSessionLocal = async_sessionmaker(
     class_=AsyncSession,
     expire_on_commit=False,
 )
+
+
+Base = declarative_base()
+
+
+# FastAPI dependency
+async def get_db():
+    async with AsyncSessionLocal() as session:
+        yield session
