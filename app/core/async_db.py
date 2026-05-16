@@ -9,3 +9,9 @@ load_dotenv()
 
 # Connection string for the async database
 ASYNC_DATABASE_URL = settings.async_database_url
+
+async_engine = create_async_engine(
+    ASYNC_DATABASE_URL,
+    echo=False,
+    connect_args={"ssl": False},
+)
