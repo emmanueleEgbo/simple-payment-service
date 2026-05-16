@@ -39,7 +39,7 @@ That means:
     - "Process payments using Stripe (or similar providers)"
 
 #### Real Problem (deeper)
-    - "Provide a reliable, consistent, and provider-agnostic way for systems to handle payments without tightly coupling to external payment APIs."
+    - "Provide a reliable, consistent, and provider-agnostic way for systems to handle payments without tight coupling to external payment APIs."
 
 #### Pain Points being Solved
     - Every team integrating directly with Stripe duplicates logic
