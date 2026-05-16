@@ -15,3 +15,10 @@ async_engine = create_async_engine(
     echo=False,
     connect_args={"ssl": False},
 )
+
+# Async session factory
+AsyncSessionLocal = async_sessionmaker(
+    bind=async_engine,
+    class_=AsyncSession,
+    expire_on_commit=False,
+)
