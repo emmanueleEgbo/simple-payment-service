@@ -2,7 +2,7 @@
 
 import uuid
 import enum
-from datetime import datetime
+from datetime import datetime, timezone
 
 from sqlalchemy import Column, Integer, String, DateTime, Enum
 from sqlalchemy.dialects.postgresql import UUID
@@ -61,3 +61,15 @@ class Payment(Base):
     description: Mapped[str | None] = mapped_column(String, nullable=False)
 
     # Timestamps
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=datetime.datetime.now(timezone.utc),
+        nullable=False
+    )
+
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=datetime.datetime.now(timezone.utc),
+        nullable=False
+    )
