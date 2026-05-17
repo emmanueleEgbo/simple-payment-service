@@ -43,3 +43,14 @@ class Payment(Base):
         nullable=False
     )
 
+    # Provider routing (stripe, etc.)
+    provider: Mapped[str] = mapped_column(String, nullable=False)
+
+    # Idempotency protection
+    idempotency_key: Mapped[str] = mapped_column(
+        String,
+        unique=True,
+        nullable=False,
+        index=True
+    )
+
