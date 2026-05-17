@@ -336,15 +336,18 @@ Core Entities
 ### 2. Define the Attributes of each entity
 
 Payment:- Represents the overall payment (business-level object).
-    - id (UUID)
-    - user_id (from client system)
-    - amount
-    - currency
-    - status (PENDING, PROCESSING, SUCCESS, FAILED)
+    - id (UUID) - Internal unique identifier for the payment.
+    - user_id / customer_reference - Who the payment belongs to.
+    - amount - Payment amount in minor currency units for exact arithmetic and avoid floating-point issues
+    - currency - ISO currency code.
+    - status - Current business-visible payment state. (PENDING, PROCESSING, SUCCESS, FAILED, REQUIRES_ACTION, CANCELLED)
     - provider (e.g. stripe)
     - idempotency_key (prevents duplicate payment creation)
+    - reference - the business object this payment is related to, for customer support, searching, invoices/orders
+    - description - Human-readable description. E.G: "Premium subscription payment"
     - created_at
     - updated_at
+
 
 #### Note: Do not store provider IDs here - keep Payment provider-agnostic
 
