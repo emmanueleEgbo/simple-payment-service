@@ -54,3 +54,6 @@ class Payment(Base):
         index=True
     )
 
+    # Business reference (order, invoice, etc.)
+    reference: Mapped[str | None] = mapped_column(String, nullable=True)
+
