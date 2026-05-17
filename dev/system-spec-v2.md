@@ -111,7 +111,7 @@ This is a:
         - "What happened to this payment?" must always be answerable
 
 ### So, what are we building?
-    - We are building a backend payment service that sits between client apps and payment providers like Stripe and provides a consistent API for creating and tracking payments.
+    - We are building a backend payment service that sits between client apps and payment providers like Stripe and the likes, and provides a consistent API for creating and tracking payments.
     It ensures reliability through idempotency, webhook handling, and internal state management.
     The goal is to decouple application teams from payment provider complexity while maintaining accurate and auditable payment flows.
 
@@ -123,7 +123,7 @@ This is a:
 
 #### Client System -> Payment Service System -> Payment Provider (e.g. Stripe)
 
-    - A Client System (external app e.g. checkout service) can create a payment request (ask out payment service to initiate a payment) 
+    - A Client System (external app e.g. checkout service) can create a payment request (ask our payment service to initiate a payment) 
     - Our payment service system then sends the payment request to a third-party provider (e.g. Stripe)
     - The payment service system then stores and tracks the payment status internally
 
@@ -326,7 +326,7 @@ Our system is:
 ## Stage 4 — Design the Data
 
 ### 1. Identify Core Entities
-For a complete but simplest viable system, we'd need:
+For a complete but simplest viable system, the following entities would be needed:
 
 Core Entities
     - Payment — current state of a payment
