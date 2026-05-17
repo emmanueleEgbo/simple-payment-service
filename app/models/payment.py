@@ -55,5 +55,9 @@ class Payment(Base):
     )
 
     # Business reference (order, invoice, etc.)
-    reference: Mapped[str | None] = mapped_column(String, nullable=True)
+    reference: Mapped[str | None] = mapped_column(String, nullable=True, index=True)
 
+    # Human readable description
+    description: Mapped[str | None] = mapped_column(String, nullable=False)
+
+    # Timestamps
