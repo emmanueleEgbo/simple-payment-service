@@ -329,7 +329,7 @@ Our system is:
 For a complete but simplest viable system, the following entities would be needed:
 
 Core Entities
-    - Payment — Represents a payment transaction and tracks its lifecycle across internal systems and external payment providers.
+    - Payment - A canonical internal representation of a payment transaction, including lifecycle state, provider references, processing metadata, and reconciliation details. It is the core business object.
     - PaymentEvent — immutable history of all changes
     - PaymentAttempt — each attempt to process a payment (handles retries cleanly)
 
