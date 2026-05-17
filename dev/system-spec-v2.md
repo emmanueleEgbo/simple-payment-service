@@ -329,7 +329,7 @@ Our system is:
 For a complete but simplest viable system, the following entities would be needed:
 
 Core Entities
-    - Payment — current state of a payment
+    - Payment — Represents a payment transaction and tracks its lifecycle across internal systems and external payment providers.
     - PaymentEvent — immutable history of all changes
     - PaymentAttempt — each attempt to process a payment (handles retries cleanly)
 
