@@ -48,7 +48,7 @@ That means:
     - Hard to switch providers later (vendor lock-in)
     - No unified tracking of payment state across systems
 
-#### Your System Provides
+#### The Payment Service System Provides
     - A single internal API
     - A consistent payment lifecycle model
     - Abstraction over providers
@@ -83,7 +83,7 @@ Multi-provider smart routing (can come later)
 Subscription billing logic
 
 #### Why this is important:
-You are building:
+This is a:
     - A payment orchestration layer, not a full payment platform
 
 ### 5. Constraints
