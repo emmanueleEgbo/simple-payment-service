@@ -1,0 +1,1 @@
+"""Defines the SQLAlchemy ORM model representing a Payment entity."""
