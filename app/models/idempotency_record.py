@@ -57,7 +57,7 @@ class IdempotencyRecord(Base):
     )
 
     response_payload: Mapped[dict | None] = mapped_column(
-        String,
+        JSON,
         nullable=True,
     )
 
