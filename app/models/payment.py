@@ -20,6 +20,7 @@ class PaymentStatus(str, enum.Enum):
     REQUIRES_ACTION  = "REQUIRES_ACTION"
     CANCELLED        = "CANCELLED"
 
+
 class Payment(Base):
     __tablename__="payments"
 
@@ -45,14 +46,6 @@ class Payment(Base):
 
     # Provider routing (stripe, etc.)
     provider: Mapped[str] = mapped_column(String, nullable=False)
-
-    # Idempotency protection
-    idempotency_key: Mapped[str] = mapped_column(
-        String,
-        unique=True,
-        nullable=False,
-        index=True
-    )
 
     # Business reference (order, invoice, etc.)
     reference: Mapped[str | None] = mapped_column(String, nullable=True, index=True)
