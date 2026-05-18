@@ -20,4 +20,9 @@ async def create_payment(
     db: AsyncSession =  Depends(get_db),
     idempotent_key: str = Header(..., alias="Idempotency-Key"),
 ):
-    pass
+    """
+    Create a new payment in an idempotent and race-condition-safe manner.
+
+    Repeated requests with the same Idempotency-Key and identical payload
+    will return the original response without creating duplicate payments.
+    """
