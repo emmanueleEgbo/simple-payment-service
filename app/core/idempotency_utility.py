@@ -13,4 +13,16 @@ ESSENTIAL_FIELDS = [
 
 
 def generate_request_hash(payload: dict) -> str:
-    pass
+    canonical_payload = {
+        key: payload[key]
+        for key in ESSENTIAL_FIELDS
+    }
+
+    serialized = json.dumps(
+        canonical_payload,
+        sort_keys=True,
+    )
+
+    return hashlib.sha256(
+        serialized.encode()
+    ).hexdigest()
