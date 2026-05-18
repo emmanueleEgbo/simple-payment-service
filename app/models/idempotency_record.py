@@ -1,3 +1,6 @@
+"""Stores idempotency state for safe request deduplication, retry handling,
+and race-condition-safe payment processing."""
+
 import uuid
 from datetime import datetime, timezone, timedelta
 
