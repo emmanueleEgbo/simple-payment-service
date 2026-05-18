@@ -8,4 +8,16 @@ from app.services.payment_service import (
     IdempotencyConflictError,
 )
 
-v1_router = APIRouter(prefix="/v1/patments", tags=["Payments"],)
+v1_router = APIRouter(prefix="/v1", tags=["Payments"],)
+
+
+payment_service = PaymentService()
+
+
+@v1_router.post("/payments")
+async def create_payment(
+    payload: CreatePaymentRequest,
+    db: AsyncSession =  Depends(get_db),
+    idempotent_key: str = Header(..., alias="Idempotency-Key"),
+):
+    pass
