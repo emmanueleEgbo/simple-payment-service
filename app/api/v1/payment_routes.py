@@ -26,3 +26,12 @@ async def create_payment(
     Repeated requests with the same Idempotency-Key and identical payload
     will return the original response without creating duplicate payments.
     """
+    try:
+        return await payment_service.create_payment(
+            db=db,
+            payload=payload,
+            idempotency_key=idempotent_key,
+        )
+    
+    except IdempotencyConflictError as exc:
+        raise HTTPException(status_code=409, detail=str(exc))
