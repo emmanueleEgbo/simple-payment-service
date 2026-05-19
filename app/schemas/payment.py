@@ -8,3 +8,7 @@ class CreatePaymentRequest(BaseModel):
     provider: str
     reference: str | None   = None
     description: str | None = None
+
+
+class PaymentResponse(BaseModel):
+    pass
