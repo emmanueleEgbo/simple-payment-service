@@ -16,4 +16,13 @@ class CreatePaymentRequest(BaseModel):
 
 
 class PaymentResponse(BaseModel):
-    pass
+    id: UUID
+    user_id: str
+    amount: int
+    currency: str
+    status: PaymentStatus
+    provider: str
+    reference: str | None = None
+    description: str | None = None
+    created_at: datetime
+    updated_at: datetime
