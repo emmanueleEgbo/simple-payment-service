@@ -75,16 +75,10 @@ That means:
     - Webhook missed -> incorrect state
 
 ### 4. What is explicitly out of scope?
-Storing or processing raw card data (PCI scope)
-Building a UI/dashboard
 Fraud detection systems
 Dispute/chargeback handling
 Multi-provider smart routing (can come later)
 Subscription billing logic
-
-#### Why this is important:
-This is a:
-    - A payment orchestration layer, not a full payment platform
 
 ### 5. Constraints
 #### Technical Constraints
@@ -103,7 +97,6 @@ This is a:
         - Arrive out of order
 
 #### Security Constraints
-    - Must avoid handling sensitive card details directly
     - Must verify webhook signatures
 
 #### Operational Constraints
@@ -124,8 +117,7 @@ This is a:
 #### Client System -> Payment Service System -> Payment Provider (e.g. Stripe)
 
     - A Client System (external app e.g. checkout service) can create a payment request (ask our payment service to initiate a payment) 
-    - Our payment service system then sends the payment request to a third-party provider (e.g. Stripe)
-    - The payment service system then stores and tracks the payment status internally
+    - Our payment service system then sends the payment request to a third-party provider (e.g. Stripe) and then stores and tracks the payment status internally
 
 #### Payment Lifecycle
     - The system receives asynchronous updates from the provider via webhooks
@@ -138,6 +130,7 @@ This is a:
     - The system ensures idempotency for payment creation (no duplicate charges)
     - The system logs all payment-related events for audit purposes
     - The system handles duplicate or repeated webhook events safely
+    - The system handles race condition greacefully
 
 #### Observability & Debugging
 A client (or internal user) can trace the lifecycle of a payment
