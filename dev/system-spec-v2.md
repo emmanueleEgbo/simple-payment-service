@@ -116,29 +116,33 @@ Subscription billing logic
 
 #### Client System -> Payment Service System -> Payment Provider (e.g. Stripe)
 
-    - A Client System (external app e.g. checkout service) can create a payment request (ask our payment service to initiate a payment) 
-    - Our payment service system then sends the payment request to a third-party provider (e.g. Stripe) and then stores and tracks the payment status internally
+    - A Client System (e.g. checkout service, ecommerce platform, subscription service) can create a payment request through the Payment Service.
+    - The Payment Service initiates payment processing through a third-party payment provider such as Stripe.
+    - The Payment Service persists and tracks payment state internally throughout the payment lifecycle.
 
 #### Payment Lifecycle
     - The system receives asynchronous updates from the provider via webhooks
-    - The system validates, deduplicates, and processes incoming events
-    - The system updates the persisted payment status based on provider events
-    - The system maintain the latest payment status as the source of truth
-    - Client apps can query the current status of a payment at anytime
+    - The system validates, deduplicates, and processes incoming privider events
+    - The system updates the persisted payment status based on provider event outcomes
+    - The system maintains the latest payment status as the canonical source of truth
+    - Client apps can retrieve the current payment status at any time.
 
 #### Reliability & Safety
-    - The system ensures idempotency for payment creation (no duplicate charges)
-    - The system logs all payment-related events for audit purposes
-    - The system handles duplicate or repeated webhook events safely
-    - The system handles race condition greacefully
+    - The system guarantees idempotent payment creation to prevent duplicate charges.
+    - The system safely handles concurrent and repeated requests.
+    - The system safely processes duplicate webhook deliveries from providers.
+    - The system records all payment-related state transitions and provider interactions for auditing and reconciliation purposes.
+    - The system ensures atomic and race-condition-safe payment processing.
 
 #### Observability & Debugging
-A client (or internal user) can trace the lifecycle of a payment
-The system records provider responses for debugging and reconciliation
+    - Client systems and internal operators can trace the full lifecycle of a payment.
+    - The system stores provider responses and event payloads for debugging and reconciliation.
+    - The system maintains immutable event history for auditability and operational analysis.
 
-#### Optional / Nice-to-Have
-    - The system can retry failed provider requests (where safe)
-    - The system can support multiple payment providers (extensible design)
+#### Extensibility (Optional / Future Enhancements)
+  - The system can retry transient provider failures where retrying is safe.
+  - The system supports integration with multiple payment providers through an extensible  provider adapter architecture.
+  - The system can support asynchronous background processing for webhooks, retries, and reconciliation workflows.
 
 
 ### 2. Non-Functional Requirements — How the system does what it does
