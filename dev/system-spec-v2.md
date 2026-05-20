@@ -424,11 +424,6 @@ Retry handling          -> PaymentAttempt
 Audit/debugging         -> PaymentEvent
 Duplicate prevention    -> IdempotencyRecord
 
-#### Core Mental Model
-    - Payment = current snapshot (what clients read)
-    - PaymentAttempt = execution layer (interaction with provider)
-    - PaymentEvent = source of truth (what actually happened)
-
 ### Think about access patterns
 Design the schema around how it's used:
 
