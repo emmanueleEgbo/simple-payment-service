@@ -332,14 +332,13 @@ Core Entities
 
 ### 2. Define the Attributes of each entity
 
-Payment:- Represents the overall payment (business-level object).
+1. Payment:- Represents the overall payment (business-level object).
     - id (UUID) - Internal unique identifier for the payment.
     - user_id / customer_reference - Who the payment belongs to.
     - amount - Payment amount in minor currency units for exact arithmetic and avoid floating-point issues
     - currency - ISO currency code.
     - status - Current business-visible payment state. (PENDING, PROCESSING, SUCCESS, FAILED, REQUIRES_ACTION, CANCELLED)
     - provider (e.g. stripe)
-    - idempotency_key (prevents duplicate payment creation)
     - reference - the business object this payment is related to, for customer support, searching, invoices/orders
     - description - Human-readable description. E.G: "Premium subscription payment"
     - created_at
@@ -348,7 +347,7 @@ Payment:- Represents the overall payment (business-level object).
 
 #### Note: Do not store provider IDs here - keep Payment provider-agnostic
 
-PaymentAttempt
+2. PaymentAttempt
 Represents a single attempt to execute a payment with a provider.
     - id
     - payment_id
@@ -362,8 +361,24 @@ Represents a single attempt to execute a payment with a provider.
         - Handles retries without corrupting the main Payment
         - Clean separation between business payment and provider interaction
 
-PaymentEvent
-Immutable log of everything that happens.
+Very important for real-world systems because:
+  - payments can fail/retry
+  - providers are async
+  - network issues happen
+
+3. PaymentEvent
+Immutable audit/event history (a log of everything that happens).
+
+Represents:
+"What happened over time?"
+
+Stores:
+  - status transitions
+  - webhook events
+  - provider responses
+  - retry events
+  - failures/successes
+
     - id
     - payment_id
     - payment_attempt_id (nullable but useful)
@@ -371,12 +386,43 @@ Immutable log of everything that happens.
     - provider_event_id (for deduplication)
     - payload (raw or sanitized provider data)
     - created_at
-This is your audit trail + debugging tool
+This is the audit trail + debugging tool
+
+4. IdempotencyRecord
+Handles request deduplication and retry safely.
+
+Represents:
+  Has this request already been processed safely?
+
+Stores:
+  - idempotency key
+  - request hash
+  - cached response
+  - expiration window
+
+This entity exists purely for:
+  - reliability
+  - concurrency safety
+  - duplicate prevention
+
+NOT business payment state.
+
+### Core Mental Model:
+Payment: Current business truth
+PaymentAttempt: Execution boundary with provider
+PaymentEvent: Historical source of truth
+IdempotencyRecord: Request-level protection
 
 ### 3. Define the Relationships between entities
-    - One Payment → has many PaymentAttempts
-    - One Payment → has many PaymentEvents
+    - One Payment → has many PaymentAttempts / many PaymentEvents
     - One PaymentAttempt → has many PaymentEvents
+    - One IdempotencyRecord -> one payment
+
+### Problems solved by the core entities:
+Current payment state   -> Payment
+Retry handling          -> PaymentAttempt
+Audit/debugging         -> PaymentEvent
+Duplicate prevention    -> IdempotencyRecord
 
 #### Core Mental Model
     - Payment = current snapshot (what clients read)
