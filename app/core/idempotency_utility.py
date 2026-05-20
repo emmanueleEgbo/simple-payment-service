@@ -1,4 +1,4 @@
-"""Request Hash Utility"""
+"""Request Hash Utility to ensure same key + different payload fail"""
 
 import hashlib
 import json
