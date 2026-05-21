@@ -2,6 +2,7 @@
 and race-condition-safe payment processing."""
 
 import uuid
+import enum
 from datetime import datetime, timezone, timedelta
 
 from sqlalchemy import (
@@ -9,12 +10,16 @@ from sqlalchemy import (
     DateTime,
     ForeignKey,
     UniqueConstraint,
-    JSON,
 )
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.async_db import Base
+
+class IdempotencyStatus(str, enum.Enum):
+    PROCESSING = "PROCESSING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
 
 
 class IdempotencyRecord(Base):
@@ -24,7 +29,7 @@ class IdempotencyRecord(Base):
         UniqueConstraint(
             "idempotency_key",
             name="uq_idempotency_key",
-        )
+        ),
     )
 
     id: Mapped[uuid.UUID] = mapped_column(
@@ -36,7 +41,6 @@ class IdempotencyRecord(Base):
     idempotency_key: Mapped[str] = mapped_column(
         String,
         nullable=False,
-        index=True
     )
 
     request_hash: Mapped[str] = mapped_column(
@@ -50,14 +54,14 @@ class IdempotencyRecord(Base):
         nullable=True,
     )
 
-    status: Mapped[str] = mapped_column(
+    status: Mapped[IdempotencyStatus] = mapped_column(
         String,
         nullable=False,
         default="PROCESSING",
     )
 
     response_payload: Mapped[dict | None] = mapped_column(
-        JSON,
+        JSONB,
         nullable=True,
     )
 
