@@ -29,6 +29,39 @@ class PaymentService:
     ):
         request_hash = generate_request_hash(payload.model_dump())
 
+        # ----------------------------------------------------------
+        # Idempotency-first lookup (prevents race duplication)
+        # ----------------------------------------------------------
+        result = await db.execute(
+            select(IdempotencyRecord).where(
+                IdempotencyRecord.idempotency_key == idempotency_key
+            )
+        )
+        existing_record = result.scalar_one_or_none()
+
+        # ----------------------------------------------------------
+        # Handle replay cases
+        # ----------------------------------------------------------
+        if existing_record:
+            # Check against payload mismatch for same idempotency key 
+            if existing_record.request_hash != request_hash:
+                raise IdempotencyConflictError(
+                    "Idempotency key reused with different payload"
+                )
+            
+            # Request still processing
+            if existing_record.status == "PROCESSING":
+                raise IdempotencyInProgressError(
+                    "payment is already being processed"
+                )
+            
+            # Completed request -> return cached response
+            if existing_record.status == "COMPLETED":
+                return existing_record.response_payload
+        
+        # ----------------------------------------------------------
+        #  Create new idempotency record + payment atomically
+        # ----------------------------------------------------------
         try:
             async with db.begin():
 
@@ -47,7 +80,7 @@ class PaymentService:
                 payment = Payment(
                     user_id=payload.user_id,
                     amount=payload.amount,
-                    currency=payload.currency,
+                    currency=payload.currency.upper(),
                     status=PaymentStatus.PENDING,
                     provider=payload.provider,
                     reference=payload.reference,
