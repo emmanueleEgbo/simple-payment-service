@@ -23,6 +23,8 @@ def validate_payload(payload: dict):
         raise MissingFieldError(f"Missing required fields: {missing}")
 
 def generate_request_hash(payload: dict) -> str:
+    validate_payload(payload)
+
     canonical_payload = {
         "user_id": payload.get("user_id"),
         "amount": payload.get("amount"),
@@ -39,6 +41,4 @@ def generate_request_hash(payload: dict) -> str:
         separators=(",", ":"),
     )
 
-    return hashlib.sha256(
-        serialized.encode()
-    ).hexdigest()
+    return hashlib.sha256(serialized.encode()).hexdigest()
