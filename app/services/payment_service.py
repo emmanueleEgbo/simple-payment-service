@@ -101,6 +101,9 @@ class PaymentService:
                 idem_record.response_payload = response_payload
             return response_payload
         
+        # ----------------------------------------------------------
+        #  Safety net for true race-condition collisions
+        # ---------------------------------------------------------- 
         except IntegrityError:
             
             await db.rollback()
