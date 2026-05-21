@@ -15,6 +15,10 @@ class IdempotencyConflictError(Exception):
     pass
 
 
+class IdempotencyInProgressError(Exception):
+    pass
+
+
 class PaymentService:
 
     async def create_payment(
