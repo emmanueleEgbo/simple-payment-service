@@ -28,9 +28,9 @@ class IdempotencyRecord(Base):
 
     __table_args__=(
         UniqueConstraint(
-            
+            "user_id",
             "idempotency_key",
-            name="uq_idempotency_key",
+            name="uq_user_idempotency_key",
         ),
     )
 
@@ -39,6 +39,13 @@ class IdempotencyRecord(Base):
         primary_key=True,
         default=uuid.uuid4,
     )
+
+    user_id: Mapped[str] = mapped_column(
+        String,
+        nullable=False,
+        index=True
+    )
+
 
     idempotency_key: Mapped[str] = mapped_column(
         String,
