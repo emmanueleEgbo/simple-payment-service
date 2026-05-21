@@ -52,7 +52,7 @@ class PaymentService:
             # Request still processing
             if existing_record.status == "PROCESSING":
                 raise IdempotencyInProgressError(
-                    "payment is already being processed"
+                    "Payment is already being processed"
                 )
             
             # Completed request -> return cached response
@@ -104,8 +104,7 @@ class PaymentService:
         # ----------------------------------------------------------
         #  Safety net for true race-condition collisions
         # ---------------------------------------------------------- 
-        except IntegrityError:
-            
+        except IntegrityError:        
             await db.rollback()
 
             result = await db.execute(
@@ -114,13 +113,25 @@ class PaymentService:
                 )
             )
 
-            existing_payment_record = result.scalar_one()
+            record = result.scalar_one_or_none()
+
+            if not record:
+                raise RuntimeError(
+                    "Idempotency race condition occured but record is missing"
+                )
 
             # Validate request response consistency
-            if existing_payment_record.request_hash != request_hash:
+            if record.request_hash != request_hash:
                 raise IdempotencyConflictError(
                     "Idempotency key reused with different payload"
                 )
             
-            # Return cached response
-            return existing_payment_record.response_payload
+            if record.status == "COMPLETED":
+                return record.response_payload
+            
+            if record.status == "PROCESSING":
+                raise IdempotencyInProgressError(
+                    "Payment is already being processed"
+                )            
+            # Fallback safety
+            raise RuntimeError("Unknown Idempotency state")
