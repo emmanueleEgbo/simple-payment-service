@@ -10,6 +10,7 @@ from sqlalchemy import (
     DateTime,
     ForeignKey,
     UniqueConstraint,
+    Enum,
 )
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import Mapped, mapped_column
@@ -27,6 +28,7 @@ class IdempotencyRecord(Base):
 
     __table_args__=(
         UniqueConstraint(
+            
             "idempotency_key",
             name="uq_idempotency_key",
         ),
@@ -52,10 +54,11 @@ class IdempotencyRecord(Base):
         UUID(as_uuid=True),
         ForeignKey("payments.id"),
         nullable=True,
+        ondelete="CASCADE",
     )
 
     status: Mapped[IdempotencyStatus] = mapped_column(
-        String,
+        Enum(IdempotencyStatus),
         nullable=False,
         default="PROCESSING",
     )
@@ -69,6 +72,7 @@ class IdempotencyRecord(Base):
         DateTime,
         default=lambda: datetime.now(timezone.utc),
         nullable=False,
+        index=True,
     )
 
     expires_at: Mapped[datetime] = mapped_column(
