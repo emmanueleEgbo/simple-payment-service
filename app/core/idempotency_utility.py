@@ -9,13 +9,13 @@ ESSENTIAL_FIELDS = [
     "amount",
     "currency",
     "provider",
+    "reference",
 ]
 
 
 def generate_request_hash(payload: dict) -> str:
     canonical_payload = {
-        key: payload[key]
-        for key in ESSENTIAL_FIELDS
+        
     }
 
     serialized = json.dumps(
