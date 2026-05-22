@@ -31,5 +31,8 @@ Base = declarative_base()
 
 # FastAPI dependency
 async def get_db():
-    async with AsyncSessionLocal() as session:
-        yield session
+    db = AsyncSessionLocal()
+    try: 
+        yield db
+    finally:
+        db.close()

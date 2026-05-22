@@ -7,9 +7,19 @@ from app.core.async_db import async_engine, Base
 from app.models.payment import Payment
 from app.models.idempotency_record import IdempotencyRecord
 
+
+# Connect to and create DB if not already created
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    async with async_engine.begin() as connection:
+        await connection.run_sync(Base.metadata.create_all)
+
+    yield
+
 app = FastAPI(
     title="Payment Orchestration Service",
     version="1.0.0",
+    lifespan=lifespan
 )
 
 app.include_router(payment_router)
