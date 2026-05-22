@@ -9,12 +9,11 @@ from app.core.config import settings
 # Load environment variable from `.env` file
 load_dotenv()
 
-# Connection string for the async database
-ASYNC_DATABASE_URL = settings.async_database_url
 
 async_engine = create_async_engine(
-    ASYNC_DATABASE_URL,
+    settings.async_database_url,
     echo=False,
+    future=True,
 )
 
 # Async session factory

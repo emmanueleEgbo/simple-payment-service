@@ -63,7 +63,7 @@ class PaymentService:
         #  Create new idempotency record + payment atomically
         # ----------------------------------------------------------
         try:
-            async with db.begin():
+            async with db.begin_nested(): # db.begin():
 
                 # Reserve idempotency key
                 idem_record = IdempotencyRecord(
