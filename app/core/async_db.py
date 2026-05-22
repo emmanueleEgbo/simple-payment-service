@@ -15,7 +15,6 @@ ASYNC_DATABASE_URL = settings.async_database_url
 async_engine = create_async_engine(
     ASYNC_DATABASE_URL,
     echo=False,
-    connect_args={"ssl": False},
 )
 
 # Async session factory
@@ -31,8 +30,5 @@ Base = declarative_base()
 
 # FastAPI dependency
 async def get_db():
-    db = AsyncSessionLocal()
-    try: 
-        yield db
-    finally:
-        db.close()
+    async with AsyncSessionLocal() as session:
+        yield session

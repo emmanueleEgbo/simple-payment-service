@@ -11,19 +11,18 @@ from app.models.idempotency_record import IdempotencyRecord
 # Connect to and create DB if not already created
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    async with async_engine.begin() as connection:
-        await connection.run_sync(Base.metadata.create_all)
+    async with async_engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
 
     yield
 
 app = FastAPI(
     title="Payment Orchestration Service",
-    version="1.0.0",
     lifespan=lifespan
 )
 
 app.include_router(payment_router)
 
-app.get("health")
+@app.get("/")
 async def health_check():
     return {"status": "healthy"}
