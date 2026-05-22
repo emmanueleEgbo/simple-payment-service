@@ -10,5 +10,7 @@ class Settings(BaseSettings):
 
     async_database_url: str  # postgressql+asyncpg://...
 
+    model_config = SettingsConfigDict(env_file=".env")
+
 
 settings = Settings()
