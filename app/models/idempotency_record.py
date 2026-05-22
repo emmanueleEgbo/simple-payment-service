@@ -59,9 +59,8 @@ class IdempotencyRecord(Base):
 
     payment_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True),
-        ForeignKey("payments.id"),
+        ForeignKey("payments.id", ondelete="CASCADE"),
         nullable=True,
-        ondelete="CASCADE",
     )
 
     status: Mapped[IdempotencyStatus] = mapped_column(
