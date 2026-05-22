@@ -115,23 +115,25 @@ class PaymentService:
 
             record = result.scalar_one_or_none()
 
-            if not record:
-                raise RuntimeError(
-                    "Idempotency race condition occured but record is missing"
-                )
+            # if not record:
+            #     raise RuntimeError(
+            #         "Idempotency race condition occured but record is missing"
+            #     )
 
-            # Validate request response consistency
-            if record.request_hash != request_hash:
-                raise IdempotencyConflictError(
-                    "Idempotency key reused with different payload"
-                )
+            # # Validate request response consistency
+            # if record.request_hash != request_hash:
+            #     raise IdempotencyConflictError(
+            #         "Idempotency key reused with different payload"
+            #     )
             
-            if record.status == "COMPLETED":
+            # if record.status == "COMPLETED":
+            #     return record.response_payload
+            
+            # if record.status == "PROCESSING":
+            #     raise IdempotencyInProgressError(
+            #         "Payment is already being processed"
+            #     )            
+            # # Fallback safety
+            if record:
                 return record.response_payload
-            
-            if record.status == "PROCESSING":
-                raise IdempotencyInProgressError(
-                    "Payment is already being processed"
-                )            
-            # Fallback safety
-            raise RuntimeError("Unknown Idempotency state")
+            raise IdempotencyInProgressError("Race detected, retry request")
