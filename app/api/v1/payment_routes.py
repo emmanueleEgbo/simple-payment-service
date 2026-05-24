@@ -13,7 +13,7 @@ v1_router = APIRouter(prefix="/v1", tags=["Payments"],)
 
 
 @v1_router.post("/payments", response_model=PaymentResponse, status_code=status.HTTP_201_CREATED)
-async def create_payment(
+async def create_new_payment(
     payload: CreatePaymentRequest,
     db: AsyncSession =  Depends(get_db)
 ):
