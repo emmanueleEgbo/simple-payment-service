@@ -8,8 +8,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.payment import Payment, PaymentStatus
 from app.models.idempotency_record import IdempotencyRecord
 from app.schemas.payment import CreatePaymentRequest
-from app.core.idempotency_utility import generate_request_hash
-
 
 class PaymentService:
 
