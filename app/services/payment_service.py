@@ -9,14 +9,14 @@ from app.models.payment import Payment, PaymentStatus
 from app.models.idempotency_record import IdempotencyRecord
 from app.schemas.payment import CreatePaymentRequest
 
-async def create_payment(db: AsyncSession, p: CreatePaymentRequest):
+async def create_payment(db: AsyncSession, payload: CreatePaymentRequest):
     new_payment = Payment(
-        user_id=p.user_id,
-        amount=p.amount,
-        currency=p.currency,
-        provider=p.provider,
-        reference=p.reference,
-        description=p.description
+        user_id=payload.user_id,
+        amount=payload.amount,
+        currency=payload.currency,
+        providerayload=payload.provider,
+        reference=payload.reference,
+        description=payload.description
     )
     db.add(new_payment)
     await db.commit()
