@@ -14,7 +14,7 @@ async def create_payment(db: AsyncSession, payload: CreatePaymentRequest):
         user_id=payload.user_id,
         amount=payload.amount,
         currency=payload.currency,
-        providerayload=payload.provider,
+        provider=payload.provider,
         reference=payload.reference,
         description=payload.description
     )
