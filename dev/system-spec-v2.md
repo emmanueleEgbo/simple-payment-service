@@ -3,7 +3,7 @@
 ## Stage 1 - Understand the problem
 
 ### Problem Statement 
-The payment service system sits between Client Apps and 3rd-party payment providers like Stripe and it standardizes how payments are created, monitored, and reconciled, while guaranteeing:
+The payment service system sits between Client Apps and 3rd-party payment providers like Stripe, etc.,  and it standardizes how payments are created, monitored, and reconciled, while guaranteeing:
     - no duplicate operations (idempotency)
     - high reliability despite external failures
     - a single, consistent source of truth for payment state
